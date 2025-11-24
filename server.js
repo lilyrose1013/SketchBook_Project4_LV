@@ -34,8 +34,8 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("draw", data);
   });
 
-  socket.on("clear", (data) => {
-    socket.broadcast.emit("clear", data);
+  socket.on("clear", () => {
+    socket.broadcast.emit("clear");
   });
 
   socket.on("message", (data) => {

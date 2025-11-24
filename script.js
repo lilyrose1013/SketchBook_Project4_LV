@@ -119,40 +119,12 @@ socket.on("draw", ({ x1, y1, x2, y2, color, size }) => drawLine(x1, y1, x2, y2, 
 
 const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", () => {
-  if (!mySide) {
-    alert("Please wait for side assignment!");
-    return;
-  }
-  
-  // Clear only the user's assigned side
-  const halfWidth = canvas.width / 2;
-  const startX = mySide === "left" ? 0 : halfWidth;
-  const clearWidth = halfWidth;
-  
-  ctx.clearRect(startX, 0, clearWidth, canvas.height);
-  
-  // Redraw background on cleared area
-  if (backgroundImageLoaded) {
-    ctx.drawImage(backgroundImage, startX, 0, clearWidth, canvas.height, startX, 0, clearWidth, canvas.height);
-    drawSideDivider();
-  }
-  
-  socket.emit("clear", { side: mySide });
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  socket.emit("clear");
 });
 
-socket.on("clear", ({ side }) => {
-  // Clear the specified side
-  const halfWidth = canvas.width / 2;
-  const startX = side === "left" ? 0 : halfWidth;
-  const clearWidth = halfWidth;
-  
-  ctx.clearRect(startX, 0, clearWidth, canvas.height);
-  
-  // Redraw background on cleared area
-  if (backgroundImageLoaded) {
-    ctx.drawImage(backgroundImage, startX, 0, clearWidth, canvas.height, startX, 0, clearWidth, canvas.height);
-    drawSideDivider();
-  }
+socket.on("clear", () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
 // Back button functionality
