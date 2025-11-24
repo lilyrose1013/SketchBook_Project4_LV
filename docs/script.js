@@ -155,4 +155,8 @@ socket.on("clear", ({ side }) => {
   }
 });
 
-
+// Back button functionality
+const backButton = document.getElementById("back");
+backButton.addEventListener("click", () => {
+  window.location.href = "index.html";
+});

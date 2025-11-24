@@ -72,3 +72,20 @@ h1 {
   max-width: 200px;
   height: auto;
 }
+
+#back {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#back img {
+  display: block;
+  max-width: 225px;
+  height: auto;
+}
