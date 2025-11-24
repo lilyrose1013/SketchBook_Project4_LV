@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f89daa;
+  overflow: hidden;
+}
+
+#cover {
+  max-width: 100%;
+  max-height: 100vh;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#cover:hover {
+  transform: scale(1.02);
+}

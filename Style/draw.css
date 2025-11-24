@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Schoolbell", cursive;
+  background: #f89daa;
+}
+
+.schoolbell-regular {
+  font-family: "Schoolbell", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-family: "Schoolbell", cursive;
+}
+
+.controls {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.controls label {
+  font-weight: bold;
+}
+
+#colorPicker {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#brushSize {
+  width: 150px;
+  cursor: pointer;
+}
+
+#sizeDisplay {
+  font-weight: bold;
+  min-width: 25px;
+}
+
+#board {
+  background: white;
+  cursor: crosshair;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background-size: cover;
+  background-position: center;
+}
+
+#clear {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
