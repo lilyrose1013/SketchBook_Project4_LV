@@ -1,5 +1,5 @@
 
-const socket = io("https://sketchbook-project4-lv.onrender.com");
+const socket = io();
 const canvas = document.getElementById("board");
 const ctx = canvas.getContext("2d");
 const colorPicker = document.getElementById("colorPicker");
