@@ -6,6 +6,7 @@ body {
   align-items: center;
   font-family: "Schoolbell", cursive;
   background: #f89daa;
+  touch-action: manipulation;
 }
 
 .schoolbell-regular {
@@ -175,12 +176,14 @@ h1 {
   background: transparent;
   cursor: pointer;
   z-index: 1000;
+  transition: none;
 }
 
 #clear img {
   display: block;
   max-width: 200px;
   height: auto;
+  transition: none;
 }
 
 #back {
