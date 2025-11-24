@@ -56,6 +56,82 @@ h1 {
   background-position: center;
 }
 
+#message {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#message img {
+  display: block;
+  max-width: 150px;
+  height: auto;
+}
+
+.message-box {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  background: white;
+  border: 3px solid #f89daa;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 250px;
+}
+
+.message-box.hidden {
+  display: none;
+}
+
+#messageInput {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border: 2px solid #f89daa;
+  border-radius: 5px;
+  font-family: "Schoolbell", cursive;
+  font-size: 14px;
+  resize: vertical;
+}
+
+#sendMessage, #closeMessage {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Schoolbell", cursive;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#sendMessage {
+  background: #f89daa;
+  color: white;
+}
+
+#sendMessage:hover {
+  background: #e88999;
+}
+
+#closeMessage {
+  background: #ddd;
+  color: #333;
+}
+
+#closeMessage:hover {
+  background: #ccc;
+}
+
 #clear {
   position: fixed;
   top: -10px;

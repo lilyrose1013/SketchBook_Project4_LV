@@ -180,3 +180,35 @@ const backButton = document.getElementById("back");
 backButton.addEventListener("click", () => {
   window.location.href = "index.html";
 });
+
+// Message button functionality
+const messageButton = document.getElementById("message");
+const messageBox = document.getElementById("messageBox");
+const messageInput = document.getElementById("messageInput");
+const sendMessageButton = document.getElementById("sendMessage");
+const closeMessageButton = document.getElementById("closeMessage");
+
+messageButton.addEventListener("click", () => {
+  messageBox.classList.toggle("hidden");
+  if (!messageBox.classList.contains("hidden")) {
+    messageInput.focus();
+  }
+});
+
+closeMessageButton.addEventListener("click", () => {
+  messageBox.classList.add("hidden");
+  messageInput.value = "";
+});
+
+sendMessageButton.addEventListener("click", () => {
+  const message = messageInput.value.trim();
+  if (message) {
+    socket.emit("message", { message, side: mySide });
+    messageInput.value = "";
+    messageBox.classList.add("hidden");
+  }
+});
+
+socket.on("message", ({ message, side }) => {
+  alert(`Message from ${side} side: ${message}`);
+});

@@ -8,10 +8,10 @@ const server = app.listen(PORT, "0.0.0.0", () => {
 });
 const io = new Server(server);
 
-// Serve static files from docs folder
+//  static files from docs 
 app.use(express.static("docs"));
 
-// Health check route
+// Health 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', port: PORT });
 });
@@ -36,6 +36,10 @@ io.on("connection", (socket) => {
 
   socket.on("clear", (data) => {
     socket.broadcast.emit("clear", data);
+  });
+
+  socket.on("message", (data) => {
+    socket.broadcast.emit("message", data);
   });
 
   socket.on("disconnect", () => {
