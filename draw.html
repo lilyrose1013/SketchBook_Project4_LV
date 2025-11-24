@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative Drawing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Style/draw.css">
+</head>
+<body>
+  <h1>Collaborative Drawing Board</h1>
+  <div class="controls">
+    <label for="colorPicker">Color:</label>
+    <input type="color" id="colorPicker" value="#000000">
+    <label for="brushSize">Size:</label>
+    <input type="range" id="brushSize" min="1" max="20" value="2">
+    <span id="sizeDisplay">2</span>
+  </div>
+  <button id="clear">
+    <img src="Images/ClearBtn.png" alt="Clear Canvas">
+  </button>
+  <button id="back">
+    <img src="Images/BackBTN.png" alt="Back to Home">
+  </button>
+  <canvas id="board" width="800" height="600"></canvas>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
