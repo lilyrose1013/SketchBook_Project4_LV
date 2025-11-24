@@ -12,6 +12,11 @@ const PORT = process.env.PORT || 3000;
 // Serve static files from docs folder
 app.use(express.static("docs"));
 
+// Health check route
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', port: PORT });
+});
+
 let userCount = 0;
 const userSides = new Map();
 
