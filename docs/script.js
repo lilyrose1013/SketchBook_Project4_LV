@@ -209,6 +209,27 @@ sendMessageButton.addEventListener("click", () => {
   }
 });
 
+const messagePopup = document.getElementById("messagePopup");
+let popupTimeout;
+
+function showMessagePopup(message, side) {
+  // Clear any existing timeout
+  if (popupTimeout) {
+    clearTimeout(popupTimeout);
+  }
+  
+  // Set message content
+  messagePopup.textContent = `Message from ${side} side: ${message}`;
+  
+  // Show popup
+  messagePopup.classList.remove("hidden");
+  
+  // Hide after 5 seconds
+  popupTimeout = setTimeout(() => {
+    messagePopup.classList.add("hidden");
+  }, 5000);
+}
+
 socket.on("message", ({ message, side }) => {
-  alert(`Message from ${side} side: ${message}`);
+  showMessagePopup(message, side);
 });
