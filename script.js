@@ -124,35 +124,55 @@ clearButton.addEventListener("click", () => {
     return;
   }
   
+  // Save current canvas state
+  ctx.save();
+  
   // Clear only the user's assigned side
   const halfWidth = canvas.width / 2;
   const startX = mySide === "left" ? 0 : halfWidth;
   const clearWidth = halfWidth;
   
+  // Use compositing to clear only drawings, preserving background
+  ctx.globalCompositeOperation = 'destination-over';
   ctx.clearRect(startX, 0, clearWidth, canvas.height);
   
   // Redraw background on cleared area
   if (backgroundImageLoaded) {
+    ctx.globalCompositeOperation = 'destination-over';
     ctx.drawImage(backgroundImage, startX, 0, clearWidth, canvas.height, startX, 0, clearWidth, canvas.height);
+    ctx.globalCompositeOperation = 'source-over';
     drawSideDivider();
   }
+  
+  // Restore canvas state
+  ctx.restore();
   
   socket.emit("clear", { side: mySide });
 });
 
 socket.on("clear", ({ side }) => {
+  // Save current canvas state
+  ctx.save();
+  
   // Clear the specified side
   const halfWidth = canvas.width / 2;
   const startX = side === "left" ? 0 : halfWidth;
   const clearWidth = halfWidth;
   
+  // Use compositing to clear only drawings, preserving background
+  ctx.globalCompositeOperation = 'destination-over';
   ctx.clearRect(startX, 0, clearWidth, canvas.height);
   
   // Redraw background on cleared area
   if (backgroundImageLoaded) {
+    ctx.globalCompositeOperation = 'destination-over';
     ctx.drawImage(backgroundImage, startX, 0, clearWidth, canvas.height, startX, 0, clearWidth, canvas.height);
+    ctx.globalCompositeOperation = 'source-over';
     drawSideDivider();
   }
+  
+  // Restore canvas state
+  ctx.restore();
 });
 
 // Back button functionality
