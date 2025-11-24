@@ -12,16 +12,20 @@ let lastX, lastY;
 let currentColor = "#000000";
 let currentSize = 2;
 let mySide = null; // be "left" or "right"
+let backgroundImageLoaded = false;
 
 // receive side assignment from server
 socket.on("assignSide", (side) => {
   mySide = side;
   console.log(`You are drawing on the ${side} side`);
-  drawSideDivider();
+  if (backgroundImageLoaded) {
+    drawSideDivider();
+  }
 });
 
 // draw a visual divider line
 function drawSideDivider() {
+  if (!backgroundImageLoaded) return;
   ctx.save();
   ctx.strokeStyle = "#ccc";
   ctx.lineWidth = 2;
@@ -37,7 +41,13 @@ function drawSideDivider() {
 const backgroundImage = new Image();
 backgroundImage.src = "Images/Pages.png";
 backgroundImage.onload = () => {
+  backgroundImageLoaded = true;
   ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+  if (mySide) drawSideDivider();
+};
+backgroundImage.onerror = () => {
+  console.error("Failed to load background image");
+  backgroundImageLoaded = true; // Still allow drawing
   if (mySide) drawSideDivider();
 };
 
@@ -100,7 +110,7 @@ function drawLine(x1, y1, x2, y2, color, size, emit) {
   ctx.lineTo(x2, y2);
   ctx.stroke();
 
-  //socket emits our draing data as a JSON object
+  // Socket emits our drawing data as a JSON object
   if (emit) socket.emit("draw", { x1, y1, x2, y2, color, size });
 }
 
@@ -109,16 +119,40 @@ socket.on("draw", ({ x1, y1, x2, y2, color, size }) => drawLine(x1, y1, x2, y2, 
 
 const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-  drawSideDivider();
-  socket.emit("clear");
+  if (!mySide) {
+    alert("Please wait for side assignment!");
+    return;
+  }
+  
+  // Clear only the user's assigned side
+  const halfWidth = canvas.width / 2;
+  const startX = mySide === "left" ? 0 : halfWidth;
+  const clearWidth = halfWidth;
+  
+  ctx.clearRect(startX, 0, clearWidth, canvas.height);
+  
+  // Redraw background on cleared area
+  if (backgroundImageLoaded) {
+    ctx.drawImage(backgroundImage, startX, 0, clearWidth, canvas.height, startX, 0, clearWidth, canvas.height);
+    drawSideDivider();
+  }
+  
+  socket.emit("clear", { side: mySide });
 });
 
-socket.on("clear", () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-  drawSideDivider();
+socket.on("clear", ({ side }) => {
+  // Clear the specified side
+  const halfWidth = canvas.width / 2;
+  const startX = side === "left" ? 0 : halfWidth;
+  const clearWidth = halfWidth;
+  
+  ctx.clearRect(startX, 0, clearWidth, canvas.height);
+  
+  // Redraw background on cleared area
+  if (backgroundImageLoaded) {
+    ctx.drawImage(backgroundImage, startX, 0, clearWidth, canvas.height, startX, 0, clearWidth, canvas.height);
+    drawSideDivider();
+  }
 });
 
 

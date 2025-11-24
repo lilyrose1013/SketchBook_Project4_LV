@@ -16,28 +16,26 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', port: PORT });
 });
 
-let userCount = 0;
 const userSides = new Map();
 
 io.on("connection", (socket) => {
   console.log("🟢 New user connected:", socket.id);
   
-  // Assign side to user (left or right)
-  userCount++;
-  const side = userCount % 2 === 1 ? "left" : "right";
+  // Assign side based on current number of connected users
+  const currentUserCount = userSides.size;
+  const side = currentUserCount % 2 === 0 ? "left" : "right";
   userSides.set(socket.id, side);
   
-  // Send the user their assigned side
+  // assigned side to user
   socket.emit("assignSide", side);
   console.log(`User ${socket.id} assigned to ${side} side`);
 
   socket.on("draw", (data) => {
-    // rebroadcast to everyone except the sender
     socket.broadcast.emit("draw", data);
   });
 
-  socket.on("clear", () => {
-    socket.broadcast.emit("clear");
+  socket.on("clear", (data) => {
+    socket.broadcast.emit("clear", data);
   });
 
   socket.on("disconnect", () => {
