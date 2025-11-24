@@ -58,7 +58,14 @@ h1 {
 
 #clear {
   margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 0;
+  border: none;
+  background: transparent;
   cursor: pointer;
+}
+
+#clear img {
+  display: block;
+  max-width: 150px;
+  height: auto;
 }
