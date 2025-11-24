@@ -120,11 +120,21 @@ socket.on("draw", ({ x1, y1, x2, y2, color, size }) => drawLine(x1, y1, x2, y2, 
 const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Redraw background image and divider
+  if (backgroundImageLoaded) {
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    drawSideDivider();
+  }
   socket.emit("clear");
 });
 
 socket.on("clear", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Redraw background image and divider
+  if (backgroundImageLoaded) {
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    drawSideDivider();
+  }
 });
 
 // Back button functionality
