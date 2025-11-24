@@ -1,13 +1,12 @@
 import express from "express";
-import http from "http";
 import { Server } from "socket.io";
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
-
-// Use the port Render provides, or default to 3000 for local dev
 const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});
+const io = new Server(server);
 
 // Serve static files from docs folder
 app.use(express.static("docs"));
@@ -45,10 +44,6 @@ io.on("connection", (socket) => {
     console.log("🔴 User disconnected:", socket.id);
     userSides.delete(socket.id);
   });
-});
-
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
 });
 
 process.on('uncaughtException', (err) => {
